@@ -1,24 +1,54 @@
-import React, { useState, useCallback } from "react";
+import { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config";
+import { toast } from "react-toastify";
+import HashLoader from "react-spinners/HashLoader";
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
+  const [previewURL,setPreviewURL] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     gender: "",
-    role: "patient"
+    role: "patient",
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = useCallback((event) => {
+  const submitHandler = async event => {
     event.preventDefault();
-    // Add your form submission logic here
-  }, []);
+    setLoading(true);
+    
+    try {
+      const res = await fetch(`${BASE_URL}/auth/register`, {
+        method: "post",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const { message } = await res.json();
+
+      if (!res.ok) {
+        throw new Error(message);
+      }
+
+      setLoading(false);
+      toast.success(message);
+      navigate("/login");
+    } catch (err) {
+      toast.error(err.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="px-5 xl:px-0">
@@ -101,16 +131,21 @@ const Signup = () => {
               </div>
               <div className="mt-7">
                 <button
+                  disabled={loading && true}
                   type="submit"
                   className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
                 >
-                  Sign Up
+                  {loading ? (
+                    <HashLoader size={35} color="#ffffff" />
+                  ) : (
+                    "Sign Up"
+                  )}
                 </button>
               </div>
 
               <p className="mt-5 text-textColor text-center">
                 Already have an account?
-                <Link to="/login" className="text-primaryColor font-medium ml-1">
+                <Link to="Login" className="text-primaryColor font-medium ml-1">
                   Login
                 </Link>
               </p>
