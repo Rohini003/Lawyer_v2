@@ -105,7 +105,7 @@ const Home = () => {
                   </p>
 
                   <Link
-                    to="/doctors"
+                    to="/lawyers"
                     className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   >
                     <BsArrowRight className="group-hover:text-white w-6 h-5 " />
@@ -127,7 +127,7 @@ const Home = () => {
                   </p>
 
                   <Link
-                    to="/doctors"
+                    to="/lawyers"
                     className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   >
                     <BsArrowRight className="group-hover:text-white w-6 h-5 " />
@@ -149,7 +149,7 @@ const Home = () => {
                   </p>
 
                   <Link
-                    to="/doctors"
+                    to="/lawyers"
                     className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
                   >
                     <BsArrowRight className="group-hover:text-white w-6 h-5 " />
@@ -194,7 +194,7 @@ const Home = () => {
                   </li>
                   <br />
                   <li className="text-para">
-                    3. View our physicians who are accepting new patient, use
+                    3. View our physicians who are accepting new client, use
                     the online scheduling tool to select an appointment time.
                   </li>
                 </ul>

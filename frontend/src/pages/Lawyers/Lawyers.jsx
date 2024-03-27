@@ -12,7 +12,7 @@ const Lawyers = () => {
               type="search"
               className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer
                  placeholder:text-textColor"
-              placeholder="Search Doctor"
+              placeholder="Search Lawyer"
             />
           <button className="btn mt-0 rounded-[0px] rounded-r-md">
             Search

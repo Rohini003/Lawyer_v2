@@ -1,6 +1,6 @@
-import doctorImg01 from "../images/lawyer44.jpg";
-import doctorImg02 from "../images/lawyer11.jpg";
-import doctorImg03 from "../images/lawyer33.jpg";
+import LawyerImg01 from "../images/lawyer44.jpg";
+import LawyerImg02 from "../images/lawyer11.jpg";
+import LawyerImg03 from "../images/lawyer33.jpg";
 
 export const lawyer = [
   {
@@ -9,8 +9,8 @@ export const lawyer = [
     specialization: "Criminal Lawyer",
     avgRating: 4.8,
     totalRating: 272,
-    photo: doctorImg01,
-    totalPatients: 1500,
+    photo: LawyerImg01,
+    totalclients: 1500,
     hospital: "Mount Adora, Sylhet.",
   },
   {
@@ -19,8 +19,8 @@ export const lawyer = [
     specialization: "Family Lawyer",
     avgRating: 4.8,
     totalRating: 272,
-    photo: doctorImg02,
-    totalPatients: 1500,
+    photo: LawyerImg02,
+    totalclients: 1500,
     hospital: "Mount Adora, Sylhet.",
   },
   {
@@ -29,8 +29,8 @@ export const lawyer = [
     specialization: "Corporate lawyer",
     avgRating: 4.8,
     totalRating: 272,
-    photo: doctorImg03,
-    totalPatients: 1500,
+    photo: LawyerImg03,
+    totalclients: 1500,
     hospital: "Mount Adora, Sylhet.",
   },
 ];

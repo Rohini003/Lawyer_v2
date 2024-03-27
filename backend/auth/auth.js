@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Doctor from "../models/DoctorSchema.js";
+import Lawyer from "../models/LawyerSchema.js";
 import User from "../models/UserSchema.js";
 
 export const authenticate = async (req,res,next) =>{
@@ -11,7 +11,7 @@ export const authenticate = async (req,res,next) =>{
 
     try {
         console.log(authToken);
-        next
+        next();
     } catch(err){
 
     }

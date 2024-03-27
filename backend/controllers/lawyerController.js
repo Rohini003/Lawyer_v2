@@ -1,10 +1,10 @@
-import Doctor from "../models/DoctorSchema.js";
+import Lawyer from "../models/LawyerSchema.js";
 
-export const updateDoctor = async (req, res) => {
+export const updateLawyer = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const updateDoctor = await Doctor.findByIdAndUpdate(
+    const updateLawyer = await Lawyer.findByIdAndUpdate(
       id,
       { $set: req.body },
       { new: true }
@@ -12,18 +12,18 @@ export const updateDoctor = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Successfully updated",
-      data: updateDoctor,
+      data: updateLawyer,
     });
   } catch (err) {
     res.status(500).json({ success: false, message: "Failed to update" });
   }
 };
 
-export const deleteDoctor = async (req, res) => {
+export const deleteLawyer = async (req, res) => {
   const id = req.params.id;
 
   try {
-    await Doctor.findByIdAndDelete(id);
+    await Lawyer.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
       message: "Successfully deleted",
@@ -33,28 +33,28 @@ export const deleteDoctor = async (req, res) => {
   }
 };
 
-export const getSingleDoctor = async (req, res) => {
+export const getSingleLawyer = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const doctors = await Doctor.findById(id);
+    const Lawyers = await Lawyer.findById(id);
     res.status(200).json({
       success: true,
-      message: "doctor found",
-      data: doctors,
+      message: "lawyer found",
+      data: Lawyers,
     });
   } catch (err) {
     res.status(404).json({ success: false, message: "no user found" });
   }
 };
 
-export const getAllDoctor = async (req, res) => {
+export const getAllLawyer = async (req, res) => {
   try {
     const { query } = req.query;
-    let doctors;
+    let lawyers;
 
     if (query) {
-      doctors = await Doctor.find({
+      lawyers = await Lawyer.find({
         isApproved: "approved",
         $or: [
           { name: { $regex: query, $options: "i" } },
@@ -62,15 +62,15 @@ export const getAllDoctor = async (req, res) => {
         ],
       }).select("-password");
     } else {
-       doctors = await Doctor.find({ isApproved: "approved" }).select(
+       lawyers = await Lawyer.find({ isApproved: "approved" }).select(
         "-password"
       );
     }
 
     res.status(200).json({
       success: true,
-      message: "doctors found",
-      data: doctors,
+      message: "lawyers found",
+      data: lawyers,
     });
   } catch (err) {
     res.status(404).json({ success: false, message: "not found" });

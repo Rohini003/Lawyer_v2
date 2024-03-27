@@ -13,7 +13,7 @@ const Signup = () => {
     email: "",
     password: "",
     gender: "",
-    role: "patient",
+    role: "client",
   });
 
   const navigate = useNavigate();
@@ -109,8 +109,8 @@ const Signup = () => {
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value="patient">Patient</option>
-                    <option value="doctor">Doctor</option>
+                    <option value="client">Client</option>
+                    <option value="Lawyer">Lawyer</option>
                   </select>
                 </label>
 

@@ -1,5 +1,5 @@
 import User from "../models/UserSchema.js";
-import Doctor from "../models/DoctorSchema.js";
+import Lawyer from "../models/LawyerSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -10,27 +10,30 @@ const generateToken = (user) => {
   );
 };
 
-export const register = async (req, res) => {
+export const register = async (req, res) => {    
   const { email, password, name, role, gender } = req.body;
+  console.log(req.body)
 
   try {
     let user = null;
 
-    if (role === "patient") {
+    if (role === "client") {
       user = await User.findOne({ email });
-    } else if (role === "doctor") {
-      user = await Doctor.findOne({ email });
+    } else if (role === "Lawyer") {
+      user = await Lawyer.findOne({ email });
     }
-    //check if user exist
+    
+    // Check if user exists
     if (user) {
-      return res.status(400).json({ message: "User already exist" });
+      return res.status(400).json({ message: "User already exists" });
     }
 
-    //hash password
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    if (role === "patient") {
+    // Create new user
+    if (role === "client") {
       user = new User({
         name,
         email,
@@ -38,10 +41,8 @@ export const register = async (req, res) => {
         gender,
         role,
       });
-    }
-
-    if (role === "doctor") {
-      user = new Doctor({
+    } else if (role === "Lawyer") {
+      user = new Lawyer({
         name,
         email,
         password: hashPassword,
@@ -49,66 +50,63 @@ export const register = async (req, res) => {
         role,
       });
     }
+
+    // Check if user was instantiated
+    if (!user) {
+      return res.status(400).json({ message: "Invalid role" });
+    }
+
+    // Save user to database
     await user.save();
-    res
-      .status(200)
-      .json({ success: true, message: "user successfully created" });
+    
+    res.status(200).json({ success: true, message: "User successfully created" });
   } catch (err) {
-    res
-      .status(500)
-      .json({ success: false, message: "Internal server error,Try again" });
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal server error. Please try again." });
   }
 };
 
+
 export const login = async (req, res) => {
-  const { email } = req.body
-  console.log(req.body)
+  const { email } = req.body;
 
   try {
-    let user = null
+    let user = null;
 
-    const patient = await User.findOne({ email })
-    const doctor = await Doctor.findOne({ email })
+    const client = await User.findOne({ email });
+    const lawyer = await Lawyer.findOne({ email });
 
-    if (patient) {
-      user = patient
+    if (client) {
+      user = client;
+    } else if (lawyer) {
+      user = lawyer;
     }
 
-    if (doctor) {
-      user = doctor
-    }
-
-    // check is user is exist or not
+    // Check if user exists
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }
 
-    //compare password
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+    // Compare password
+    const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (!isPasswordMatch) {
-      return res
-        .status(400)
-        .json({ status: false, message: "Invalid credentials" });
+      return res.status(400).json({ status: false, message: "Invalid credentials" });
     }
 
-    //getToken
+    // Generate token
     const token = generateToken(user);
 
     const { password, role, appointments, ...rest } = user._doc;
     res.status(200).json({
       success: true,
-      message: "Successfully login",
+      message: "Successfully logged in",
       token,
       data: { ...rest },
       role,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false, message: "Failed to login" });
-    console.log(err)
   }
 };

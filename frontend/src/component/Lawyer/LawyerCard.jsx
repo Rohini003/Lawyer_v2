@@ -10,7 +10,7 @@ const LawyerCard = ({ lawyer }) => {
     totalRating,
     photo,
     specialization,
-    totalPatients,
+    totalclients,
     hospital,
   } = lawyer;
   return (
@@ -40,7 +40,7 @@ const LawyerCard = ({ lawyer }) => {
       <div className="mt-[18px] lg:nt-5 flex items-center justify-between">
         <div>
           <h3 className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor">
-            +{totalPatients} Peoples
+            +{totalclients} Peoples
           </h3>
           <p className="text-[14px] leading-6 font-[400] text-textColor">At {hospital}</p>
         </div>

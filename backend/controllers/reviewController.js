@@ -1,5 +1,5 @@
 import Review from "../models/ReviewSchema.js";
-import Doctor from "../models/DoctorSchema.js";
+import Lawyer from "../models/LawyerSchema.js";
 
 export const getAllReviews = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ export const getAllReviews = async (req, res) => {
 };
 
 export const createReview = async (req, res) => {
-  if (!req.body.doctor) req.body.doctor = req.params.doctorId;
+  if (!req.body.lawyer) req.body.lawyer = req.params.lawyerId;
   if (!req.body.user) req.body.user = req.userId;
 
   const newReview = new Review(req.body);
@@ -22,7 +22,7 @@ export const createReview = async (req, res) => {
   try {
     const savedReview = await newReview.save();
 
-    await Doctor.findByIdAndUpdate(req.body.doctor, {
+    await Lawyer.findByIdAndUpdate(req.body.lawyer, {
       $push: { reviews: savedReview._id },
     });
 
