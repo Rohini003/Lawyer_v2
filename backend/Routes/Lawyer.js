@@ -13,7 +13,7 @@ import reviewRouter from "./review.js"
 
 const router = express.Router();
 
-router.use("/:doctorId/reviews", reviewRouter)
+router.use("/:lawyerId/reviews", reviewRouter)
 
 router.get("/:id", getSingleLawyer);
 router.get("/", getAllLawyer);
