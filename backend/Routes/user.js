@@ -6,13 +6,13 @@ import {
   getAllUser,
 } from "../controllers/userController.js";
 
-import { authenticate } from "../auth/auth.js";
+import { authenticate, restrict } from "../auth/auth.js";
 
 const router = express.Router();
 
-router.get("/:id",authenticate,getSingleUser);
-router.get("/", getAllUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.get("/:id",authenticate,restrict(['user']),getSingleUser);
+router.get("/", authenticate,restrict(['admin']), getAllUser);
+router.put("/:id", authenticate,restrict(['user']), updateUser);
+router.delete("/:id", authenticate,restrict(['user']), deleteUser);
 
 export default router;

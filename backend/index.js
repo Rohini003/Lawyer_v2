@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import authRoute from "../backend/Routes/routes.js";
 import userRoute from "../backend/Routes/user.js";
 import LawyerRoute from "./Routes/Lawyer.js";
+import reviewRoute from "./Routes/review.js";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoute); //domain/api/v1/auth/register
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/lawyers", LawyerRoute);
+app.use("/api/v1/routes", reviewRoute);
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);

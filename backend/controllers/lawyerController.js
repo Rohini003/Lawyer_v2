@@ -4,7 +4,7 @@ export const updateLawyer = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const updateLawyer = await Lawyer.findByIdAndUpdate(
+    const updateLawyer = await Lawyer.findByIdAndUpdate( 
       id,
       { $set: req.body },
       { new: true }
