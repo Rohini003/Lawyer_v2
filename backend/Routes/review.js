@@ -10,6 +10,7 @@ const router = express.Router({ mergeParams: true });
 router
   .route("/")
   .get(getAllReviews)
-  .post(authenticate, restrict(['user']), createReview);
+  // .post(authenticate, createReview);
+  .post(authenticate, restrict(["client"]), createReview);
 
 export default router;

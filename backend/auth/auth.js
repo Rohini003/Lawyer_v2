@@ -40,19 +40,25 @@ export const authenticate = async (req, res, next) => {
 
 export const restrict = roles => async (req, res, next) => {
   const userId = req.userId;
+  
+  let user;
 
-  try {
-    // Find user by ID
-    const user = await User.findById(userId) || await Lawyer.findById(userId);
+  const client = await User.findById(userId);
+  const lawyer = await Lawyer.findById(userId);
 
-    if (!user || !roles.includes(user.role)) {
-      return res
-        .status(403)
-        .json({ success: false, message: "You are not authorized" });
-    }
-    next();
-  } catch (err) {
-    console.error("Error in restrict middleware:", err);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  if (client){
+    user = client;
+  } 
+  if (lawyer){
+    user = lawyer;
+  } 
+
+  if (!user || !roles.includes(user.role)) {
+    console.log(user)
+    return res
+      .status(401)
+      .json({ success: false, message: "You are not authorized" });
   }
+  next();
 };
+

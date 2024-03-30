@@ -35,7 +35,7 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoute); //domain/api/v1/auth/register
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/lawyers", LawyerRoute);
-app.use("/api/v1/routes", reviewRoute);
+app.use("/api/v1/reviews", reviewRoute);
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);

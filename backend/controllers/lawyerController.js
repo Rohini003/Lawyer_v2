@@ -1,3 +1,4 @@
+import Booking from "../models/BookingSchema.js";
 import Lawyer from "../models/LawyerSchema.js";
 
 export const updateLawyer = async (req, res) => {
@@ -37,11 +38,14 @@ export const getSingleLawyer = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const Lawyers = await Lawyer.findById(id);
+    const lawyer = await Lawyer.findById(id) 
+    .populate("reviews") 
+    .select("-password");
+
     res.status(200).json({
       success: true,
       message: "lawyer found",
-      data: Lawyers,
+      data: lawyer,
     });
   } catch (err) {
     res.status(404).json({ success: false, message: "no user found" });
@@ -74,5 +78,33 @@ export const getAllLawyer = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({ success: false, message: "not found" });
+  }
+};
+
+export const getLawyerProfile = async(req,res) =>{
+  const lawyerId = res.userId;
+
+  try {
+    const lawyer = await Lawyer.findById(lawyerId);
+
+    if (!doctor) {
+      return res
+        .status(404)
+        .json({ success: false, message: "lawyer not found" });
+    }
+    const { password, ...rest } = lawyer._doc;
+    const appointments = await Booking.find({lawyer:lawyerId});
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Profile info is getting",
+        data: { ...rest },
+      });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "something went wrong,cannot get" });
   }
 };
