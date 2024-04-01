@@ -15,18 +15,20 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
-  origin: true,
+    origin: true,
 };
 
 app.get("/", (req, res) => {
-  res.send("Api is working");
+    res.send("Api is working");
 });
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/Lawyer_V1")
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.error("MongoDB Connection Error: " + err));
+    .connect(
+        "mongodb+srv://WiseyXD:Qwerty88**@testcluster.hbkxnkx.mongodb.net/lawyertest"
+    )
+    .then(() => console.log("MongoDB Connected"))
+    .catch((err) => console.error("MongoDB Connection Error: " + err));
 
 // Middlewares
 app.use(cors(corsOptions));
@@ -38,5 +40,5 @@ app.use("/api/v1/lawyers", LawyerRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
 app.listen(port, () => {
-  console.log("Server is running on port " + port);
+    console.log("Server is running on port " + port);
 });
