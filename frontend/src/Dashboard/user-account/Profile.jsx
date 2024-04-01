@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'; // Added useState import
 import { useNavigate } from 'react-router-dom'; // Added useNavigate import
-import { BASE_URL,token } from '../../../config';
+import { BASE_URL,getToken } from '../../../config';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
 
@@ -31,7 +31,7 @@ const Profile = ({user}) => {
                 method: 'put',
                 headers: {
                     'content-Type': 'application/json',
-                    Authorization:`Bearer ${token}`
+                    Authorization:`Bearer ${getToken}`
                 },
                 body: JSON.stringify(formData),
             });
