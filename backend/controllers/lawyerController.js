@@ -82,15 +82,15 @@ export const getAllLawyer = async (req, res) => {
 };
 
 export const getLawyerProfile = async(req,res) =>{
-  const lawyerId = res.userId;
+  const lawyerId = req.userId;
 
   try {
     const lawyer = await Lawyer.findById(lawyerId);
 
-    if (!doctor) {
+    if (!lawyer) {
       return res
         .status(404)
-        .json({ success: false, message: "lawyer not found" });
+        .json({ success: false, message: "Lawyer not found" });
     }
     const { password, ...rest } = lawyer._doc;
     const appointments = await Booking.find({lawyer:lawyerId});
@@ -105,6 +105,7 @@ export const getLawyerProfile = async(req,res) =>{
   } catch (err) {
     res
       .status(500)
-      .json({ success: false, message: "something went wrong,cannot get" });
+      .json({ success: false, message: "Something went wrong, cannot get profile info" });
   }
 };
+

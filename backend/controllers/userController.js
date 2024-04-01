@@ -1,6 +1,6 @@
 import User from "../models/UserSchema.js";
 import Booking from "../models/BookingSchema.js";
-import Lawyer from "../models/LawyerSchema.js";
+import Lawyer from "../models/LawyerSchema.js"; // Import Lawyer model
 
 export const updateUser = async (req, res) => {
     const id = req.params.id;
@@ -92,21 +92,21 @@ export const getUserProfile = async (req, res) => {
 
 export const getMyAppointments = async (req, res) => {
     try {
-        // step 1: retrive appointment from booking for specific user
+        // step 1: retrieve appointments from booking for specific user
         const bookings = await Booking.find({ user: req.userId });
 
-        //step 2 : extract lawyer id from appointment booking
-        const lawyeIds = bookings.map((el) => el.Lawyer.id);
+        // step 2: extract lawyer id from appointment booking
+        const lawyerIds = bookings.map((el) => el.lawyer);
 
-        // step 3: retrive lawyer using lawyer ids
-        const lawyers = await Lawyer.find({ _id: { $in: doctorIds } }).select(
+        // step 3: retrieve lawyers using lawyer ids
+        const lawyers = await Lawyer.find({ _id: { $in: lawyerIds } }).select(
             "-password"
         );
 
         res.status(200).json({
             success: true,
             message: "Appointments are getting",
-            data: doctors,
+            data: lawyers,
         });
     } catch (err) {
         res.status(404).json({ success: false, message: "not found" });

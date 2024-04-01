@@ -24,9 +24,7 @@ app.get("/", (req, res) => {
 
 // MongoDB connection
 mongoose
-    .connect(
-        "mongodb+srv://WiseyXD:Qwerty88**@testcluster.hbkxnkx.mongodb.net/lawyertest"
-    )
+.connect("mongodb://127.0.0.1:27017/", { useNewUrlParser: true })
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.error("MongoDB Connection Error: " + err));
 

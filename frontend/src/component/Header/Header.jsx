@@ -10,7 +10,7 @@ const navLinks = [
         display: "Home",
     },
     {
-        path: "/lawyers",
+        path: "/lawyers", 
         display: "Find a Laywer",
     },
     {
@@ -49,7 +49,7 @@ const Header = () => {
     const toggleMenu = () => menuRef.current.classList.toggle("show_menu");
 
     function handleLogout() {
-        console.log("Clciked Logout");
+        console.log("Clicked Logout");
         dispatch({
             type: "LOGOUT",
         });
@@ -68,7 +68,7 @@ const Header = () => {
                     <div
                         className="navigation"
                         ref={menuRef}
-                        onclick={toggleMenu}
+                        onClick={toggleMenu}
                     >
                         <ul className="menu flex items-center gap-[2.7rem]">
                             {navLinks.map((link, index) => (
@@ -86,7 +86,7 @@ const Header = () => {
                                 </li>
                             ))}
                         </ul>
-                        <button onClick={handleLogout}>Logout</button>
+                       
                     </div>
 
                     {/*========= nav right ==========*/}

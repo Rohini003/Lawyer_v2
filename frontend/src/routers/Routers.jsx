@@ -6,7 +6,7 @@ import Signup from "../pages/Signup";
 import Contact from "../pages/Contact";
 import Lawyers from "../pages/Lawyers/Lawyers";
 import LawyerDetails from "../pages/Lawyers/LawyersDetails";
-import MyAccount from "../Dashboard/user-account/MyAccount";
+import MyAccount from "../Dashboard/user-account/MyAccount.jsx";
 import Dashboard from "../Dashboard/lawyer-account/Dashboard";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
