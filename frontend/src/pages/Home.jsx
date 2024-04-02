@@ -32,7 +32,9 @@ const Home = () => {
                     magni nesciunt sed amet id iure cumque veritatis deleniti
                     alias fugit! Nisi, doloremque quia! In, magnam?
                   </p>
-                  <button className="btn">Request an Appointment</button>
+                  <Link to=''>
+                  <button className="btn" >Request an Appointment</button>
+                  </Link>
                 </div>
                 {/* ====== hero counter */}
                 <div className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[30px]">

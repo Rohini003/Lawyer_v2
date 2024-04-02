@@ -1,41 +1,42 @@
-// Import necessary modules and models
+import User from "../models/UserSchema.js";
+import Lawyer from "../models/LawyerSchema.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const generateToken = (user) => {
-    try {
-        return jwt.sign(
-            { id: user._id, role: user.role },
-            process.env.JWT_SECRET_KEY,
-            {
-                expiresIn: "15d",
-            }
-        );
-    } catch (err) {
-        throw new Error("Failed to generate token");
-    }
+    return jwt.sign(
+        { id: user._id, role: user.role },
+        process.env.JWT_SECRET_KEY,
+        {
+            expiresIn: "15d",
+        }
+    );
 };
 
 export const register = async (req, res) => {
     const { email, password, name, role, gender } = req.body;
+    console.log(req.body);
 
     try {
-        let user;
+        let user = null;
 
-        if (role.toLowerCase() === "client") {
+        if (role === "client") {
             user = await User.findOne({ email });
-        } else if (role.toLowerCase() === "lawyer") {
+        } else if (role === "Lawyer") {
             user = await Lawyer.findOne({ email });
-        } else {
-            throw new Error("Invalid role");
         }
 
+        // Check if user exists
         if (user) {
             return res.status(400).json({ message: "User already exists" });
         }
 
+        // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
 
-        if (role.toLowerCase() === "client") {
+        // Create new user
+        if (role === "client") {
             user = new User({
                 name,
                 email,
@@ -43,7 +44,7 @@ export const register = async (req, res) => {
                 gender,
                 role,
             });
-        } else if (role.toLowerCase() === "lawyer") {
+        } else if (role === "Lawyer") {
             user = new Lawyer({
                 name,
                 email,
@@ -53,10 +54,12 @@ export const register = async (req, res) => {
             });
         }
 
+        // Check if user was instantiated
         if (!user) {
-            throw new Error("Failed to instantiate user");
+            return res.status(400).json({ message: "Invalid role" });
         }
 
+        // Save user to database
         await user.save();
 
         res.status(200).json({
@@ -73,10 +76,10 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     try {
-        let user;
+        let user = null;
 
         const client = await User.findOne({ email });
         const lawyer = await Lawyer.findOne({ email });
@@ -87,19 +90,27 @@ export const login = async (req, res) => {
             user = lawyer;
         }
 
+        // Check if user exists
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: "user not found" });
         }
 
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        // Compare password
+        const isPasswordMatch = await bcrypt.compare(
+            req.body.password,
+            user.password
+        );
 
         if (!isPasswordMatch) {
-            return res.status(400).json({ status: false, message: "Invalid credentials" });
+            return res
+                .status(400)
+                .json({ status: false, message: "Invalid credentials" });
         }
 
+        // Generate token
         const token = generateToken(user);
 
-        const { password: userPassword, role, appointments, ...rest } = user._doc;
+        const { password, role, appointments, ...rest } = user._doc;
         res.status(200).json({
             success: true,
             message: "Successfully logged in",

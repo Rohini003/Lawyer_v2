@@ -44,7 +44,7 @@ const LawyerCard = ({ lawyer }) => {
           </h3>
           <p className="text-[14px] leading-6 font-[400] text-textColor">At {hospital}</p>
         </div>
-        <Link to = '/lawyer'
+        <Link to = '/lawyers/1'
         className="w-[44px] h-[44px] rounded-full border border-solid border-[#1B141E] flex items-center justify-center group hover:bg-primaryColor hover:border-none">
           <BsArrowRight className="group-hover:text-white w-6 h-5"/>
         </Link>

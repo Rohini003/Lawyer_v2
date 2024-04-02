@@ -8,6 +8,7 @@ import Lawyers from "../pages/Lawyers/Lawyers";
 import LawyerDetails from "../pages/Lawyers/LawyersDetails";
 import MyAccount from "../Dashboard/user-account/MyAccount.jsx";
 import Dashboard from "../Dashboard/lawyer-account/Dashboard";
+import CheckoutSuccess from "../component/Lawyer/CheckoutSuccess";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -24,6 +25,7 @@ const Router = () => {
             <Route path="/services" element={<Services />} />
             <Route path="/users/profile/me" element={<MyAccount />} />
             <Route path="/lawyers/profile/me" element={<Dashboard />} />
+            <Route path="/checkout-success" element={<CheckoutSuccess />} />
 
             <Route
                 path="/users/profile/me"

@@ -8,6 +8,7 @@ import authRoute from "../backend/Routes/routes.js";
 import userRoute from "../backend/Routes/user.js";
 import LawyerRoute from "./Routes/Lawyer.js";
 import reviewRoute from "./Routes/review.js";
+import bookingRoute from "./Routes/booking.js"
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
 
 // MongoDB connection
 mongoose
-.connect("mongodb://127.0.0.1:27017/", { useNewUrlParser: true })
+.connect("mongodb://127.0.0.1:27017/Lawyer_V1", { useNewUrlParser: true })
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.error("MongoDB Connection Error: " + err));
 
@@ -36,6 +37,7 @@ app.use("/api/v1/auth", authRoute); //domain/api/v1/auth/register
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/lawyers", LawyerRoute);
 app.use("/api/v1/reviews", reviewRoute);
+app.use("/api/v1/bookings", bookingRoute);
 
 app.listen(port, () => {
     console.log("Server is running on port " + port);
