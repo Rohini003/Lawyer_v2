@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import avatar from "../../assets/images/avatar-icon.png";
 import { formateDate } from "../../component/utils/formateDate";
 import { AiFillStar } from "react-icons/ai";
@@ -6,11 +6,12 @@ import FeedbackForm from "./FeedbackForm";
 import axios from "axios";
 import useFetchData from "../../hooks/useFetchData";
 import { BASE_URL } from "../../../config";
+import { authContext } from "../../context/AuthContext";
 
 const Feedback = () => {
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
     const [reviews, setReviews] = useState([]);
-
+   
     const { data, loading, error } = useFetchData(`${BASE_URL}/reviews/`);
 
     if (loading) {
@@ -35,6 +36,9 @@ const Feedback = () => {
     //     };
     // }, []);
 
+    const names = ["Sheetal Bisht" , "Rohini Parase" , "Divya Gupta" , "Omkar Kawale" , "Akansha Gundi" , "Sanket Villian" , "Nikshe Hero"]
+
+
     return (
         <div>
             <div className="mb-[50px]">
@@ -54,7 +58,8 @@ const Feedback = () => {
                                 </figure>
                                 <div>
                                     <h5 className="text-[16px] leading-6 text-primaryColor font-bold">
-                                        Smith John
+                                       Rohini
+                  
                                     </h5>
                                     <p className="text-[14px] leading-6 text-textColor">
                                         {formateDate("02-12-2023")}
