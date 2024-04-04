@@ -9,11 +9,13 @@ import starIcon from "../../assets/images/Star.png";
 import LawyerAbout from "../../pages/Lawyers/LawyerAbout.jsx";
 import Profile from "../user-account/Profile.jsx";
 import Appointments from "./Appointment.jsx";
+import useFetchData from "../../hooks/useFetchData.jsx";
 
 const Dashboard = () => {
-  const { data, loading, error } = useGetProfile(
+  const { data, loading, error } = useFetchData(
     `${BASE_URL}/lawyers/profile/me`
   );
+  console.log(data)
   const [tab, setTab] = useState("overview");
 
   return (
@@ -62,7 +64,7 @@ const Dashboard = () => {
                           {data.specialization}Criminal Lawyer
                         </span>
                         <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
-                          Muhibar Rahman
+                          Yash Banger
                         </h3>
                         <div className="flex items-center gap-[6px]">
                           <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">

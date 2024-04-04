@@ -9,21 +9,23 @@ export const getCheckoutSession = async (req, res) => {
         const lawyer = await Lawyer.findById(req.params.lawyerId);
         const user = await User.findById(req.userId);
 
+
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 
         // Create Stripe checkout session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: `${process.env.CLIENT_SITE_URL}/checkout-success`,
+            success_url: `${process.env.CLIENT_SITE_URL}checkout-success`,
             cancel_url: `${req.protocol}://${req.get('host')}/lawyers/${lawyer.id}`,
             customer_email: user.email,
             client_reference_id: req.params.lawyerId,
             line_items: [
                 {
                     price_data: {
-                        currency: "rs",
-                        unit_amount: lawyer.ticketPrice * 100,
+                        currency: "usd",
+                        unit_amount: 1 * 100,
                         product_data: {
                             name: lawyer.name,
                             description: lawyer.bio,
@@ -37,9 +39,9 @@ export const getCheckoutSession = async (req, res) => {
 
         // Create new booking
         const booking = new Booking({
-            lawyer: lawyer._id,
+            Lawyer: lawyer._id,
             user: user._id,
-            ticketPrice: lawyer.ticketPrice,
+            ticketPrice: 1*100,
             session: session.id
         });
 
@@ -47,6 +49,7 @@ export const getCheckoutSession = async (req, res) => {
 
         res.status(200).json({ success: true, message: "Successfully paid", session });
     } catch (err) {
-        res.status(500).json({ success: false, message: "Error creating checkout session" });
+        res.status(500).json({ success: false, message: err.message });
+        console.log(err)
     }
 };

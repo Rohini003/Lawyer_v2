@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
-import { getToken } from "../../config";
+import { useContext, useEffect, useState } from "react";
+
+import { authContext } from "../context/AuthContext";
 
 const useFetchData = (url) => {
+    const auth = useContext(authContext);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
+console.log(auth.token)
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
 
             try {
-                const token = getToken();
-                console.log(token);
+         
+          
                 const res = await fetch(url, {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${auth.token}` },
                 });
 
                 const result = await res.json();

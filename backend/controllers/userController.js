@@ -94,9 +94,9 @@ export const getMyAppointments = async (req, res) => {
     try {
         // step 1: retrieve appointments from booking for specific user
         const bookings = await Booking.find({ user: req.userId });
-
+console.log(bookings)
         // step 2: extract lawyer id from appointment booking
-        const lawyerIds = bookings.map((el) => el.lawyer);
+        const lawyerIds = bookings.map((el) => el.Lawyer);
 
         // step 3: retrieve lawyers using lawyer ids
         const lawyers = await Lawyer.find({ _id: { $in: lawyerIds } }).select(

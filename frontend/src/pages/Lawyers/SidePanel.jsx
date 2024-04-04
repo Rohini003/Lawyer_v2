@@ -2,13 +2,16 @@ import React, { useContext } from "react";
 import { BASE_URL } from "../../../config";
 import { authContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import {toast} from "react-toastify";
+
 const SidePanel = ({ lawyerId, lawyerFees, timeSlots }) => {
     const { token } = useContext(authContext);
-    console.log(token);
+    console.log(lawyerId);
     const bookingHandler = async () => {
+        console.log("book ap")
         try {
             const res = await fetch(
-                `${BASE_URL}/bookings/checkout-session/${lawyerId}`,
+                `${BASE_URL}/bookings/checkout-session/${"6601c4c0e8ee2db7b49552d4"}`,
                 {
                     method: "POST",
                     headers: {
@@ -20,15 +23,14 @@ const SidePanel = ({ lawyerId, lawyerFees, timeSlots }) => {
             const data = await res.json();
             console.log(data);
             if (!res.ok) {
-                throw new Error(`${data.message}. Please try again`);
+                throw new Error(data.message + 'Please try again');
             }
 
             if (data.session.url) {
                 window.location.href = data.session.url;
             }
         } catch (err) {
-            // toast.error(err.message);
-            console.log(err.message);
+            toast.error(err.message);
         }
     };
 
@@ -71,11 +73,9 @@ const SidePanel = ({ lawyerId, lawyerFees, timeSlots }) => {
                     </li>
                 </ul>
             </div>
-            <Link to={"/checkout-success"}>
-                <button className="btn px-2 w-full rounded-md">
+                <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">
                     Book Appointment
                 </button>
-            </Link>
         </div>
     );
 };

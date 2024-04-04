@@ -25,9 +25,12 @@ const CheckoutSuccess = () => {
                     <div className="py-10 text-center">
                         <Link
                             to="/home"
-                            className="px-12 bg-buttonBgColor text-white font-semibold py-3 rounded-md inline-block"
+                            className="px-12 bg-buttonBgColor font-semibold py-3 rounded-md inline-block bg-blue-500 text-white"
                         >
+                            <button>
+
                             Go Back To Home
+                            </button>
                         </Link>
                     </div>
                 </div>

@@ -93,7 +93,8 @@ export const getLawyerProfile = async(req,res) =>{
         .json({ success: false, message: "Lawyer not found" });
     }
     const { password, ...rest } = lawyer._doc;
-    const appointments = await Booking.find({lawyer:lawyerId});
+    console.log(lawyerId)
+    const appointments = await Booking.find({Lawyer:lawyerId});
 
     res
       .status(200)
@@ -101,6 +102,7 @@ export const getLawyerProfile = async(req,res) =>{
         success: true,
         message: "Profile info is getting",
         data: { ...rest },
+        appointments,
       });
   } catch (err) {
     res
