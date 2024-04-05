@@ -12,7 +12,7 @@ import { authenticate, restrict } from "../auth/auth.js";
 
 const router = express.Router();
 
-router.get("/:id", authenticate, restrict(["client"]), getSingleUser);
+router.get("/:id", authenticate, restrict(["client","Lawyer"]), getSingleUser);
 router.get("/", authenticate, restrict(["lawyer"]), getAllUser);
 router.put("/:id", authenticate, restrict(["client"]), updateUser);
 router.delete("/:id", authenticate, restrict(["client"]), deleteUser);
