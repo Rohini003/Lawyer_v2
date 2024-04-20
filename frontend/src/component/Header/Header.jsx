@@ -48,13 +48,10 @@ const Header = () => {
     const toggleMenu = () => menuRef.current.classList.toggle("show_menu");
 
     function handleLogout() {
-        console.log("Clicked Logout");
         dispatch({
             type: "LOGOUT",
         });
     }
-
-    console.log(user);
 
     return (
         <header className="header flex items-center" ref={headerRef}>

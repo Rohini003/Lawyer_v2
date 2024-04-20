@@ -2,62 +2,63 @@ import mongoose from "mongoose";
 import lawyer from "./LawyerSchema.js";
 
 const reviewSchema = new mongoose.Schema(
-  {
-    Lawyer: {
-      type: mongoose.Types.ObjectId,
-      ref: "Lawyer",
+    {
+        Lawyer: {
+            type: mongoose.Types.ObjectId,
+            ref: "Lawyer",
+        },
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
+        reviewText: {
+            type: String,
+            required: true,
+        },
+        rating: {
+            type: Number,
+            required: true,
+            min: 0,
+            max: 5,
+            default: 0,
+        },
     },
-    user: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-    },
-    reviewText: {
-      type: String,
-      required: true,
-    },
-    rating: {
-      type: Number,
-      required: true,
-      min: 0,
-      max: 5,
-      default: 0,
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 );
 
 reviewSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "user",
-    select: "name photo",
-  });
+    this.populate({
+        path: "user",
+        select: "name photo",
+    });
 
-  next();
+    next();
 });
 
 reviewSchema.statics.calcAverageRatings = async function (lawyerId) {
-  const stats = await this.aggregate([
-    {
-      $match: { lawyer: lawyerId },
-    },
-    {
-      $group: {
-        _id: "lawyer",
-        numOfRating: { $sum: 1 },
-        avgRating: { $avg: "$rating" },
-      },
-    },
-  ]);
-  console.log(stats);
+    const stats = await this.aggregate([
+        {
+            $match: { lawyer: lawyerId },
+        },
+        {
+            $group: {
+                _id: "lawyer",
+                numOfRating: { $sum: 1 },
+                avgRating: { $avg: "$rating" },
+            },
+        },
+    ]);
+    console.log(stats);
 
-  await lawyer.findByIdAndUpdate(lawyerId, {
-    totalRating: stats[0].numOfRating,
-    avgRating: stats[0].avgRating,
-  });
+    const nalla = await lawyer.findByIdAndUpdate(lawyerId, {
+        totalRating: stats[0].numOfRating,
+        avgRating: stats[0].avgRating,
+    });
+    console.log(nalla);
 };
 
 reviewSchema.post("save", function () {
-  this.constructor.calcAverageRatings(this.lawyer);
+    this.constructor.calcAverageRatings(this.lawyer);
 });
 
 export default mongoose.model("Review", reviewSchema);

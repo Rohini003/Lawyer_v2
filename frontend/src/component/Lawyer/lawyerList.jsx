@@ -11,7 +11,7 @@ const LawyerList = () => {
         loading,
         error,
     } = useFetchData(`${BASE_URL}/lawyers`);
-    console.log(data);
+
     return (
         <>
             {loading && <Loader />}
