@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { formateDate } from "../../component/utils/formateDate";
 import { AiFillStar } from "react-icons/ai";
 import FeedbackForm from "./FeedbackForm";
 import useFetchData from "../../hooks/useFetchData";
 import { BASE_URL } from "../../../config";
+import { authContext } from "../../context/AuthContext";
 
 const Feedback = ({ reviews, totalRating }) => {
+    const { role } = useContext(authContext);
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
-    //   const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
         setShowFeedbackForm(false);
@@ -70,17 +71,21 @@ const Feedback = ({ reviews, totalRating }) => {
                     </div>
                 ))}
             </div>
-            {!showFeedbackForm && (
-                <div className="text-center">
-                    <button
-                        className="btn"
-                        onClick={() => setShowFeedbackForm(true)}
-                    >
-                        Give Feedback
-                    </button>
-                </div>
+            {!role == "Lawyer" && (
+                <>
+                    {!showFeedbackForm && (
+                        <div className="text-center">
+                            <button
+                                className="btn"
+                                onClick={() => setShowFeedbackForm(true)}
+                            >
+                                Give Feedback
+                            </button>
+                        </div>
+                    )}
+                    {showFeedbackForm && <FeedbackForm />}
+                </>
             )}
-            {showFeedbackForm && <FeedbackForm />}
         </div>
     );
 };
