@@ -17,19 +17,19 @@ const Lawyers = () => {
   };
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceQuery(query);
+    }, 700);
 
-    const timeout = setTimeout(() =>{
-      setDebounceQuery(query)
-    },700)
+    return () => clearTimeout(timeout);
+  }, [query]);
 
-    return()=> clearTimeout(timeout)
-  },[query])
-
-  const { 
-    data: lawyers, 
-    loading, 
-    error } = useFetchData(`${BASE_URL}/lawyers?query=${debounceQuery}`);
-    console.log(lawyers)
+  const {
+    data: lawyers,
+    loading,
+    error,
+  } = useFetchData(`${BASE_URL}/lawyers?query=${debounceQuery}`);
+  console.log(lawyers);
   return (
     <>
       <section className="bg-[#fff9ea]">
@@ -59,7 +59,7 @@ const Lawyers = () => {
           {error && <Error />}
           {!loading && !error && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] lg:mt-[55px]">
-              {lawyer.map((lawyer) => (
+              {lawyers.map((lawyer) => (
                 <Lawyercard key={lawyer.id} lawyer={lawyer} />
               ))}
             </div>
@@ -139,4 +139,3 @@ export default Lawyers;
 // };
 
 // export default Lawyers;
-

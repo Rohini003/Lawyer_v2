@@ -3,6 +3,7 @@ import starIcon from "../../assets/images/Star.png";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
+
 const LawyerCard = ({ lawyer }) => {
   const {
     name,
@@ -44,7 +45,8 @@ const LawyerCard = ({ lawyer }) => {
           </h3>
           <p className="text-[14px] leading-6 font-[400] text-textColor">At {hospital}</p>
         </div>
-        <Link to = '/lawyers/1'
+        <Link 
+        to = {`/lawyers/${lawyer._id}`}
         className="w-[44px] h-[44px] rounded-full border border-solid border-[#1B141E] flex items-center justify-center group hover:bg-primaryColor hover:border-none">
           <BsArrowRight className="group-hover:text-white w-6 h-5"/>
         </Link>

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import userImg from "../../assets/images/lawyer11.jpg";
+import userImg from "../../assets/images/user.png";
 import { authContext } from "../../context/AuthContext";
 import MyBookings from "./MyBookings";
 import Profile from "./Profile";
@@ -17,6 +17,7 @@ const MyAccount = ({ user }) => {
         loading,
         error,
     } = useGetProfile(`${BASE_URL}/users/profile/me`);
+
 
     const handleLogout = () => {
         dispatch({ type: "LOGOUT" });

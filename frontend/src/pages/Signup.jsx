@@ -4,14 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../config";
 import { toast } from "react-toastify";
 import HashLoader from "react-spinners/HashLoader";
+import uploadImageToCloudinary from "../component/utils/uploadCloudinary";
 
 const Signup = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [previewURL,setPreviewURL] = useState("");
+  const [previewURL, setPreviewURL] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    photo: selectedFile,
     gender: "",
     role: "client",
   });
@@ -22,10 +25,22 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = async event => {
+  const handleFileInputChange = async (event) => {
+    const file = event.target.files[0];
+    const data = await uploadImageToCloudinary(file);
+
+    setPreviewURL(data.url);
+    setSelectedFile(data.url);
+    setFormData({ ...formData, photo: data.url });
+
+    //later will use cloudinary
+  };
+
+  const submitHandler = async (event) => {
+    console.log(formData);
     event.preventDefault();
     setLoading(true);
-    
+
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
         method: "post",
@@ -129,6 +144,37 @@ const Signup = () => {
                   </select>
                 </label>
               </div>
+
+              <div className="mb-5 flex items-center gap-3">
+                {selectedFile && (
+                  <figure className="w-[60px] h-[60px] rounded-full bottom-2 border-solid border-primaryColor flex items-center justify-center">
+                    <img
+                      src={previewURL}
+                      alt=""
+                      className="w-full rounded-full"
+                    />
+                  </figure>
+                )}
+
+                <div className="relative w-[130px] h-[50px]">
+                  <input
+                    type="file"
+                    name="photo"
+                    id="customFile"
+                    onChange={handleFileInputChange}
+                    accept=".jpg, .png"
+                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+
+                  <label
+                    htmlFor="customFile"
+                    className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
+                  >
+                    Upload Photo
+                  </label>
+                </div>
+              </div>
+
               <div className="mt-7">
                 <button
                   disabled={loading && true}

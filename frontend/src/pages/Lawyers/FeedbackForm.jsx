@@ -1,90 +1,103 @@
 import React, { useContext, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
-import axios from "axios";
-import { authContext } from "../../context/AuthContext";
+import { useParams } from "react-router-dom";
+import { BASE_URL, getToken } from "../../../config";
+import HashLoader from "react-spinners/HashLoader";
+import { toast } from "react-toastify";
 
 const FeedbackForm = () => {
-    const [rating, setRating] = useState(0);
-    const [hover, setHover] = useState(0);
-    const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const { token } = useContext(authContext);
+  const { id } = useParams();
 
-    const handleSubmitReview = async (e) => {
-        e.preventDefault();
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-        axios.post(
-            "http://localhost:5000/api/v1/lawyers/660bd2482410e7e04225cb96/reviews",
-            // Data to send (if any)
-            {
-                reviewText,
-                rating,
-            },
-            // Configuration object including headers
-            {
-                headers: {
-                    "Content-Type": "application/json", // Example header
-                    Authorization: `Bearer ${token}`, // Example header
-                    // Add more headers if needed
-                },
-            }
-        );
-        form.reset();
-        // later we will use our api
-    };
+    try {
+      if (!rating || !reviewText) {
+        setLoading(false);
+        return toast.error("Rating and Review Fields are required");
+      } else {
+        const res = await fetch(`${BASE_URL}/lawyers/${id}/reviews`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`, // getToken is a function, so you need to call it
+          },
+          body: JSON.stringify({ rating, reviewText }),
+        });
 
-    return (
-        <form action="">
-            <div>
-                <h3 className="text-headingcolor text-[16px] leading-6 font-semibold mb-4 mt-0">
-                    How would you rate the overall experience?
-                </h3>
+        const result = await res.json();
 
-                <div>
-                    {[...Array(5).keys()].map((_, index) => {
-                        index += 1;
-                        return (
-                            <button
-                                key={index}
-                                type="button"
-                                className={`${
-                                    index <= ((rating && hover) || hover)
-                                        ? "text-yellowColor"
-                                        : "text-gray-400"
-                                } bg-transparent border-none outline-none text-[22px] cursor-pointer`}
-                                onClick={() => setRating(index)}
-                                onMouseEnter={() => setHover(index)}
-                                onMouseLeave={() => setHover(rating)}
-                                onDoubleClick={() => {
-                                    setHover(0);
-                                    setRating(0);
-                                }}
-                            >
-                                <span>
-                                    <AiFillStar />
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
+        if (!res.ok) {
+          throw new Error(result.message);
+        }
 
-            <div className="mt-[30px]">
-                <h3 className="text-headingcolor text-[16px] leading-6 font-semibold mb-4 mt-0">
-                    Share your feedback and suggestions
-                </h3>
-                <textarea
-                    className="border border-solid border-[#0066ff34] focus:outline outline-primaryColor w-full px-4 py-3 rounded-md"
-                    rows="5"
-                    placeholder="write your message"
-                    onChange={(e) => setReviewText(e.target.value)}
-                ></textarea>
-            </div>
-            <button type="submit" onClick={handleSubmitReview} className="btn">
-                Submit Feedback
-            </button>
-        </form>
-    );
+        setLoading(false);
+        toast.success(result.message);
+      }
+    } catch (err) {
+      setLoading(false);
+      toast.error(err.message);
+    }
+  };
+
+  return (
+    <form action="">
+      <div>
+        <h3 className="text-headingcolor text-[16px] leading-6 font-semibold mb-4 mt-0">
+          How would you rate the overall experience?
+        </h3>
+
+        <div>
+          {[...Array(5).keys()].map((_, index) => {
+            index += 1;
+            return (
+              <button
+                key={index}
+                type="button"
+                className={`${
+                  index <= ((rating && hover) || hover)
+                    ? "text-yellowColor"
+                    : "text-gray-400"
+                } bg-transparent border-none outline-none text-[22px] cursor-pointer`}
+                onClick={() => setRating(index)}
+                onMouseEnter={() => setHover(index)}
+                onMouseLeave={() => setHover(rating)}
+                onDoubleClick={() => {
+                  setHover(0);
+                  setRating(0);
+                }}
+              >
+                <span>
+                  <AiFillStar />
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mt-[30px]">
+        <h3 className="text-headingcolor text-[16px] leading-6 font-semibold mb-4 mt-0">
+          Share your feedback and suggestions
+        </h3>
+        <textarea
+          className="border border-solid border-[#0066ff34] focus:outline outline-primaryColor w-full px-4 py-3 rounded-md"
+          rows="5"
+          placeholder="write your message"
+          onChange={(e) => setReviewText(e.target.value)}
+        ></textarea>
+      </div>
+      <button type="submit" onClick={handleSubmitReview} className="btn">
+        {loading ? <HashLoader size={25} color="#fff" /> : "Submit Feedback"}
+      </button>
+    </form>
+  );
 };
 
 export default FeedbackForm;

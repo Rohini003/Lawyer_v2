@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {BASE_URL} from "../../../config"
+import {toast} from 'react-toastify'
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,16 @@ const Profile = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const updateProfileHandler = async e => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch(`${B}`)
+    } catch (err) {
+      
+    }
+  }
 
   const handleQualificationsChange = (index, e) => {
     const { name, value } = e.target;

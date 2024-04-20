@@ -1,4 +1,3 @@
-import React from "react";
 import { BASE_URL } from "../../../config";
 import { lawyer } from "./../../assets/data/lawyer";
 import useFetchData from "../../hooks/useFetchData";
