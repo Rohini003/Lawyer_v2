@@ -9,7 +9,7 @@ const navLinks = [
         display: "Home",
     },
     {
-        path: "/lawyers", 
+        path: "/lawyers",
         display: "Find a Laywer",
     },
     {
@@ -54,6 +54,8 @@ const Header = () => {
         });
     }
 
+    console.log(user);
+
     return (
         <header className="header flex items-center" ref={headerRef}>
             <div className="container">
@@ -85,7 +87,6 @@ const Header = () => {
                                 </li>
                             ))}
                         </ul>
-                       
                     </div>
 
                     {/*========= nav right ==========*/}
@@ -93,16 +94,23 @@ const Header = () => {
                         {token && user ? (
                             <div>
                                 <Link
-                                    to={`${role === 'Lawyer' ? '/lawyers/profile/me' : '/users/profile/me'}`}
+                                    to={`${
+                                        role === "Lawyer"
+                                            ? "/lawyers/profile/me"
+                                            : "/users/profile/me"
+                                    }`}
                                 >
-                                    <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
-                                        <img
-                                            src={user?.photo}
-                                            className="w-full rounded-full"
-                                            alt=""
-                                        />
-                                    </figure>
-                                
+                                    {!user.photo ? (
+                                        <>{user.name}</>
+                                    ) : (
+                                        <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
+                                            <img
+                                                src={user?.photo}
+                                                className="w-full rounded-full"
+                                                alt=""
+                                            />
+                                        </figure>
+                                    )}
                                 </Link>
                             </div>
                         ) : (
