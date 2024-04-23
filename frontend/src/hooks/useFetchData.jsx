@@ -7,14 +7,12 @@ const useFetchData = (url) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-console.log(auth.token)
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
 
             try {
-         
-          
                 const res = await fetch(url, {
                     headers: { Authorization: `Bearer ${auth.token}` },
                 });
