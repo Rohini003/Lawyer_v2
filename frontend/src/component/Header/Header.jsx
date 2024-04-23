@@ -1,6 +1,6 @@
 import { useEffect, useRef, useContext } from "react";
 import logo1 from "../../assets/images/justice2.png";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
 import { authContext } from "../../context/AuthContext";
 const navLinks = [
@@ -22,10 +22,12 @@ const navLinks = [
     },
 ];
 const Header = () => {
+    const {dispatch} = useContext(authContext);
+    const navigate = useNavigate();
     const headerRef = useRef(null);
     const menuRef = useRef(null);
     const { user, role, token } = useContext(authContext);
-    const { dispatch } = useContext(authContext);
+   
     const handleStickyHeader = () => {
         window.addEventListener("scroll", () => {
             if (
@@ -47,12 +49,13 @@ const Header = () => {
 
     const toggleMenu = () => menuRef.current.classList.toggle("show_menu");
 
-    function handleLogout() {
-        dispatch({
-            type: "LOGOUT",
-        });
-    }
-
+  
+  
+    const handleLogout = () => {
+      dispatch({ type: "LOGOUT"});
+      navigate("/");
+    };
+  
     return (
         <header className="header flex items-center" ref={headerRef}>
             <div className="container">
@@ -83,6 +86,9 @@ const Header = () => {
                                     </NavLink>
                                 </li>
                             ))}
+                            <li onClick={handleLogout}>
+                                Logout
+                            </li>
                         </ul>
                     </div>
 

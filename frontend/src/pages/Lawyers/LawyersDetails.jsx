@@ -56,7 +56,7 @@ const LawyersDetails = () => {
                             <div className="flex items-center gap-5">
                                 <figure className="max-w-[200px] max-h-[200px]">
                                     <img
-                                        src={lawyerimg}
+                                        src={photo}
                                         alt=""
                                         className="w-full"
                                     />
