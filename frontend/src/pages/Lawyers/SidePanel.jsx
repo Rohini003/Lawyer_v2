@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const SidePanel = ({ lawyerId, lawyerFees, timeSlots }) => {
-    const { token } = useContext(authContext);
-
+    const { token,user } = useContext(authContext);
+console.log(user)
     const bookingHandler = async () => {
         try {
             const res = await fetch(
-                `${BASE_URL}/bookings/checkout-session/${"6601c4c0e8ee2db7b49552d4"}`,
+                `${BASE_URL}/bookings/checkout-session/${lawyerId}`,
                 {
                     method: "POST",
                     headers: {

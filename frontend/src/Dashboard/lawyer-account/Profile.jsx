@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {BASE_URL} from "../../../config"
-import {toast} from 'react-toastify'
+import { BASE_URL } from "../../../config";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -17,19 +17,25 @@ const Profile = () => {
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const updateProfileHandler = async e => {
+  const updateProfileHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${B}`)
+      const res = await fetch(`${BASE_URL}/updateProfile`, {
+        method: "PUT",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // Handle response
     } catch (err) {
-      
+      // Handle error
     }
-  }
+  };
 
   const handleQualificationsChange = (index, e) => {
     const { name, value } = e.target;
@@ -53,7 +59,7 @@ const Profile = () => {
       <h2 className="text-headingcolor font-bold text-[24px] leading-9 mb-10">
         Profile Information
       </h2>
-      <form>
+      <form onSubmit={updateProfileHandler}>
         <div className="mb-5">
           <p className="form__label">Name*</p>
           <input
@@ -147,7 +153,7 @@ const Profile = () => {
         </div>
         <div className="mb-5">
           <p className="form__label">Qualifications</p>
-          {formData.qualifications.map((item, index) => (
+          {formData.qualifications?.map((item, index) => (
             <div key={index}>
               <div className="grid grid-cols-2 gap-5">
                 <div>
@@ -177,6 +183,7 @@ const Profile = () => {
             Add Qualification
           </button>
         </div>
+        <button type="submit">Update Profile</button>
       </form>
     </div>
   );

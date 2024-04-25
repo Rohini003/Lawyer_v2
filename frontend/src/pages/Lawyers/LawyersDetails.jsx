@@ -8,7 +8,7 @@ import { BASE_URL } from "../../../config";
 import Loader from "../../component/loader/Loading";
 import Error from "../../component/Error/Error";
 import { useParams } from "react-router-dom";
-import lawyerimg from "../../assets/images/lawyer44.jpg";
+
 
 const LawyersDetails = () => {
     const [tab, setTab] = useState("about");
@@ -125,7 +125,7 @@ const LawyersDetails = () => {
                             </div>
                         </div>
                         <div>
-                            <SidePanel />
+                            <SidePanel lawyerId={id}/>
                         </div>
                     </div>
                 )}
