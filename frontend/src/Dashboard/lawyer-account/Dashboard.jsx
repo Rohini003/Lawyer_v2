@@ -4,10 +4,9 @@ import Error from "../../component/Error/Error.jsx";
 import useGetProfile from "../../hooks/useFetchData.jsx";
 import { BASE_URL } from "../../../config";
 import Tabs from "../lawyer-account/Tabs.jsx";
-import user from "../../assets/images/user.png";
 import starIcon from "../../assets/images/Star.png";
 import LawyerAbout from "../../pages/Lawyers/LawyerAbout.jsx";
-import Profile from "../user-account/Profile.jsx";
+import Profile from "../lawyer-account/Profile.jsx";
 import Appointments from "./Appointment.jsx";
 import useFetchData from "../../hooks/useFetchData.jsx";
 
@@ -102,7 +101,7 @@ const Dashboard = () => {
                                         appointments={data.appointments}
                                     />
                                 )}
-                                {tab === "settings" && <Profile />}
+                                {tab === "settings" && <Profile/>}
                             </div>
                         </div>
                     </div>

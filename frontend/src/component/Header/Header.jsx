@@ -30,16 +30,20 @@ const Header = () => {
    
     const handleStickyHeader = () => {
         window.addEventListener("scroll", () => {
-            if (
-                document.body.scrollTop > 80 ||
-                document.documentElement.scrollTop > 80
-            ) {
-                headerRef.current.classList.add("stickey_header");
-            } else {
-                headerRef.current.classList.remove("stickey_header");
+            const headerElement = headerRef.current;
+            if (headerElement) {
+                if (
+                    document.body.scrollTop > 80 ||
+                    document.documentElement.scrollTop > 80
+                ) {
+                    headerElement.classList.add("sticky_header");
+                } else {
+                    headerElement.classList.remove("sticky_header");
+                }
             }
         });
     };
+    
 
     useEffect(() => {
         handleStickyHeader();

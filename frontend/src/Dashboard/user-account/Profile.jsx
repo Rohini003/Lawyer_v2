@@ -13,17 +13,18 @@ const Profile = ({ user }) => {
     phone: "",
     bio: "",
     gender: "",
+    about:"",
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setFormData({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      bio: user.bio,
-      gender: user.gender,
+      name: user?.name,
+      email: user?.email,
+      phone: user?.phone,
+      bio: user?.bio,
+      gender: user?.gender,
     });
   }, [user]);
 
