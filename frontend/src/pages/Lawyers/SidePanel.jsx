@@ -4,7 +4,7 @@ import { authContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const SidePanel = ({ lawyerId, lawyerFees, timeSlots }) => {
+const SidePanel = ({ lawyerId, lawyerFees, timeslots }) => {
     const { token,user } = useContext(authContext);
 console.log(user)
     const bookingHandler = async () => {

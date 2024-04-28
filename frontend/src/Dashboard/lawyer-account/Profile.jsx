@@ -390,7 +390,7 @@ const Profile = ({ lawyerData }) => {
                     <p className="form__label">Court</p>
                     <input
                       type="text"
-                      name="court"
+                      name="hospital"
                       value={item.hospital}
                       onChange={(e) => handleExperienceChange(index, e)}
                       placeholder="Court"

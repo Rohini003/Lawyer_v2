@@ -33,7 +33,7 @@ const LawyerCard = ({ lawyer }) => {
             {avgRating}
           </span>
           <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[480] text-textColor">
-            ({totalRating})
+            (250)
           </span>
         </div>
       </div>
