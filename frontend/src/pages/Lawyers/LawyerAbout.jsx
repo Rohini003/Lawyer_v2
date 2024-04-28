@@ -1,7 +1,6 @@
 import React from "react";
 import { formateDate } from "../../component/utils/formateDate";
-const LawyerAbout = ({name, about , qualifications, experiences}) => {
-
+const LawyerAbout = ({ name, about, qualifications, experiences }) => {
   return (
     <div>
       <div>
@@ -12,7 +11,16 @@ const LawyerAbout = ({name, about , qualifications, experiences}) => {
           </span>
         </h3>
         <p className="text_para">
-         {about ? (<p>about</p>):(<p>No Information about the lawyer {name}.</p>)}
+          {about ? (
+            <p>about</p>
+          ) : (
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
+              reiciendis dolorem sit molestiae fugiat impedit ipsa, fugit
+              doloremque qui delectus aperiam fuga modi! Provident labore
+              accusantium, sunt accusamus praesentium ipsum? {name}.
+            </p>
+          )}
         </p>
       </div>
 
@@ -20,72 +28,49 @@ const LawyerAbout = ({name, about , qualifications, experiences}) => {
         <h3 className=" text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2">
           Education
         </h3>
-        {qualifications?.length !== 0 ? (     <ul className="pt-4 md:p-5">
-          <li className="flex flex-col sm:flex-row sm:justify-between sm:items-end md:gap-5 mb-[30px]">
-            <div>
-              <span className="text-irisBlueColor text-[15px] leading-6 font-semibold">
-                {formateDate("09-13-2014")} - {formateDate("09-13-2014")}
-              </span>
-              <p className="text-[15px] leading-5 font-medium text-textColor ">
-                LLM in Criminal Law
+        <ul className="pt-4 md:p-5">
+          {qualifications?.map((item, index) => (
+            <li
+              key={index}
+              className="flex flex-col sm:flex-row sm:justify-between sm:items-end md:gap-5 mb-[30px]"
+            >
+              <div>
+                <span className="text-irisBlueColor text-[15px] leading-6 font-semibold">
+                  {formateDate(item.startingDate)} -{" "}
+                  {formateDate(item.endingDate)}
+                </span>
+                <p className="text-[15px] leading-5 font-medium text-textColor ">
+                  {item.degree}
+                </p>
+              </div>
+              <p className="text-[14px] leading-5 font-medium text-textColor">
+                {item.university}
               </p>
-            </div>
-            <p className="text-[14px] leading-5 font-medium text-textColor">
-              Mumbai
-            </p>
-          </li>
-
-          <li className="flex flex-col sm:flex-row sm:justify-between sm:items-end md:gap-5 mb-[30px]">
-            <div>
-              <span className="text-irisBlueColor text-[15px] leading-6 font-semibold">
-                {formateDate("07-04-2010")}
-              </span>
-              <p className="text-[14px] leading-5 font-medium text-textColor ">
-                LLM in Criminal Law
-              </p>
-            </div>
-            <p className="text-[14px] leading-5 font-medium text-textColor">
-              Mumbai
-            </p>
-          </li>
-        </ul>):(<>No Qualification info about the lawyer {name}.</>)}
-
-   
+            </li>
+          ))}
+        </ul>
       </div>
+
       <div className="mt-12">
         <h3 className=" text-[20px] leading-[30px] text-headingColor font-semibold">
           Experience
         </h3>
-        {experiences?.length ? (
-  <ul className="grid sm:grid-cols-2 gap-[30px] pt-4 md:p-5 ">
-    <li className="p-4 rounded bg-[#fff9ea]">
-      <span className="text-yellowColor text-[15px] leading-6 font-semibold">
-        {formatDate("09-13-2014")} - {formatDate("09-13-2014")}
-      </span>
-      <p className="text-[14px] leading-5 font-medium text-textColor ">
-        Criminal Lawyer
-      </p>
-      <p className="text-[14px] leading-5 font-medium text-textColor ">
-        Bombay High Court
-      </p>
-    </li>
-    <li className="p-4 rounded bg-[#fff9ea]">
-      <span className="text-yellowColor text-[15px] leading-6 font-semibold">
-        {formatDate("09-13-2014")} - {formatDate("09-13-2014")}
-      </span>
-      <p className="text-[14px] leading-5 font-medium text-textColor ">
-        Criminal Lawyer
-      </p>
-      <p className="text-[14px] leading-5 font-medium text-textColor ">
-        Bombay High Court
-      </p>
-    </li>
-  </ul>
-) : (
-  <p>No experience provided for lawyer {name}</p>
-)}
-
-       
+        <ul className="grid sm:grid-cols-2 gap-[30px] pt-4 md:p-5 ">
+          {experiences?.map((item, index) => (
+            <li key={index} className="p-4 rounded bg-[#fff9ea]">
+              <span className="text-yellowColor text-[15px] leading-6 font-semibold">
+                {formateDate(item.startingDate)} -{" "}
+                {formateDate(item.endingDate)}
+              </span>
+              <p className="text-[14px] leading-5 font-medium text-textColor ">
+                {item.position}
+              </p>
+              <p className="text-[14px] leading-5 font-medium text-textColor ">
+                {item.hospital}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
