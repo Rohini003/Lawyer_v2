@@ -1,0 +1,7 @@
+node_modules
+<<<<<<< HEAD
+package-lock.json
+=======
+package-lock.json
+.env
+>>>>>>> 0c38716 (updated code for hosting)

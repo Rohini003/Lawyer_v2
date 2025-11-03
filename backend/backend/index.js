@@ -24,9 +24,10 @@ app.get("/", (req, res) => {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect("mongodb://127.0.0.1:27017/Lawyer_V1", { useNewUrlParser: true })
   .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.error("MongoDB Connection Error: " + err));
+  .catch((err) => console.error("MongoDB Connection Error: " + err)); 
 // Middlewares
 app.use(cors(corsOptions));
 app.use(cookieParser());
